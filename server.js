@@ -36,7 +36,6 @@ app.post("/pay", async (req, res) => {
   let paymentIntent = await stripe.paymentIntents.retrieve(req.body.payment_intent_id)
   const paymentMethod = await stripe.paymentMethods.retrieve(paymentIntent.payment_method)
   let fundingType = paymentMethod.card?.funding
-  console.log(fundingType)
   if (fundingType == "credit"){
     stripe.paymentIntents.cancel(paymentIntent.id)
     res.send({
